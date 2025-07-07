@@ -1,0 +1,19 @@
+---
+type Props = {
+  name: string
+  class?: string
+} & astroHTML.JSX.VideoHTMLAttributes
+
+const { name, class: className, ...rest }: Props = Astro.props
+---
+
+{/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+<video
+  class:list={['w-fit', className]}
+  preload="none"
+  poster={`/media/${name}/poster.webp`}
+  {...rest}
+>
+  <source src={`/media/${name}/video.webm`} type="video/webm" />
+  <source src={`/media/${name}/video.mp4`} type="video/mp4" />
+</video>
