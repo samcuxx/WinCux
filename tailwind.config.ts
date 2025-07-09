@@ -37,7 +37,7 @@ const config: Config = {
         input: "var(--input)",
         ring: "var(--ring)",
         coral: "var(--coral)",
-        "zen-blue": "var(--zen-blue)",
+        "wincux-blue": "var(--wincux-blue)",
         subtle: "var(--subtle)",
         dark: "var(--dark)",
       },
@@ -65,4 +65,4 @@ const config: Config = {
   plugins: [],
 };
 
-export default config; 
+export default config;

@@ -5,35 +5,38 @@ export default function Footer() {
   return (
     <footer
       id="footer"
-      className="zen-footer"
+      className="wincux-footer"
       role="contentinfo"
       aria-label="Site footer"
     >
-      <div className="zen-footer-container">
-        <div className="zen-footer-content">
+      <div className="wincux-footer-container">
+        <div className="wincux-footer-content">
           {/* Brand Section */}
-          <section className="zen-footer-brand" aria-labelledby="footer-title">
+          <section
+            className="wincux-footer-brand"
+            aria-labelledby="footer-title"
+          >
             <Link href="/">
-              <h2 id="footer-title" className="zen-footer-title">
+              <h2 id="footer-title" className="wincux-footer-title">
                 WinCux
               </h2>
             </Link>
-            <p className="zen-footer-description">
+            <p className="wincux-footer-description">
               Beautifully designed, privacy-focused, and packed with features.
               We care about your desktop experience, not your data.
             </p>
           </section>
 
           {/* Download Button */}
-          <section className="zen-footer-download">
+          <section className="wincux-footer-download">
             <Link
               href="/download"
-              className="zen-footer-download-btn"
+              className="wincux-footer-download-btn"
               aria-label="Download WinCux"
             >
               Download
               <svg
-                className="zen-arrow-icon"
+                className="wincux-arrow-icon"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -51,27 +54,27 @@ export default function Footer() {
 
           {/* Navigation Links */}
           <section
-            className="zen-footer-nav"
+            className="wincux-footer-nav"
             aria-label="Footer navigation and links"
           >
-            <div className="zen-footer-links-grid">
-              <div className="zen-footer-links-left">
+            <div className="wincux-footer-links-grid">
+              <div className="wincux-footer-links-left">
                 {/* Follow Us Section */}
                 <section
-                  className="zen-footer-section"
+                  className="wincux-footer-section"
                   aria-labelledby="follow-us-heading"
                 >
-                  <h3 id="follow-us-heading" className="zen-footer-heading">
+                  <h3 id="follow-us-heading" className="wincux-footer-heading">
                     Follow Us
                   </h3>
-                  <div className="zen-social-links">
+                  <div className="wincux-social-links">
                     <Link
                       href="https://github.com/samcuxx/WinCux"
-                      className="zen-social-link"
+                      className="wincux-social-link"
                       aria-label="GitHub"
                     >
                       <svg
-                        className="zen-social-icon"
+                        className="wincux-social-icon"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -80,11 +83,11 @@ export default function Footer() {
                     </Link>
                     <Link
                       href="#"
-                      className="zen-social-link"
+                      className="wincux-social-link"
                       aria-label="Twitter"
                     >
                       <svg
-                        className="zen-social-icon"
+                        className="wincux-social-icon"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -93,11 +96,11 @@ export default function Footer() {
                     </Link>
                     <Link
                       href="#"
-                      className="zen-social-link"
+                      className="wincux-social-link"
                       aria-label="Discord"
                     >
                       <svg
-                        className="zen-social-icon"
+                        className="wincux-social-icon"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -106,11 +109,11 @@ export default function Footer() {
                     </Link>
                     <Link
                       href="#"
-                      className="zen-social-link"
+                      className="wincux-social-link"
                       aria-label="Reddit"
                     >
                       <svg
-                        className="zen-social-icon"
+                        className="wincux-social-icon"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -122,21 +125,21 @@ export default function Footer() {
 
                 {/* About Us Section */}
                 <section
-                  className="zen-footer-section"
+                  className="wincux-footer-section"
                   aria-labelledby="about-us-heading"
                 >
-                  <h3 id="about-us-heading" className="zen-footer-heading">
+                  <h3 id="about-us-heading" className="wincux-footer-heading">
                     About Us
                   </h3>
                   <nav aria-label="About navigation">
-                    <ul className="zen-footer-list">
+                    <ul className="wincux-footer-list">
                       <li>
-                        <Link href="#about" className="zen-footer-link">
+                        <Link href="#about" className="wincux-footer-link">
                           Team & Contributors
                         </Link>
                       </li>
                       <li>
-                        <Link href="#" className="zen-footer-link">
+                        <Link href="#" className="wincux-footer-link">
                           Privacy Policy
                         </Link>
                       </li>
@@ -147,30 +150,30 @@ export default function Footer() {
 
               {/* Get Started Section */}
               <nav
-                className="zen-footer-section"
+                className="wincux-footer-section"
                 aria-labelledby="get-started-heading"
               >
-                <h3 id="get-started-heading" className="zen-footer-heading">
+                <h3 id="get-started-heading" className="wincux-footer-heading">
                   Get Started
                 </h3>
-                <ul className="zen-footer-list">
+                <ul className="wincux-footer-list">
                   <li>
-                    <Link href="#" className="zen-footer-link">
+                    <Link href="#" className="wincux-footer-link">
                       Documentation
                     </Link>
                   </li>
                   <li>
-                    <Link href="#features" className="zen-footer-link">
+                    <Link href="#features" className="wincux-footer-link">
                       Features
                     </Link>
                   </li>
                   <li>
-                    <Link href="#" className="zen-footer-link">
+                    <Link href="#" className="wincux-footer-link">
                       Release Notes
                     </Link>
                   </li>
                   <li>
-                    <Link href="/download" className="zen-footer-link">
+                    <Link href="/download" className="wincux-footer-link">
                       Download
                     </Link>
                   </li>
@@ -179,33 +182,33 @@ export default function Footer() {
 
               {/* Get Help Section */}
               <nav
-                className="zen-footer-section"
+                className="wincux-footer-section"
                 aria-labelledby="get-help-heading"
               >
-                <h3 id="get-help-heading" className="zen-footer-heading">
+                <h3 id="get-help-heading" className="wincux-footer-heading">
                   Get Help
                 </h3>
-                <ul className="zen-footer-list">
+                <ul className="wincux-footer-list">
                   <li>
-                    <Link href="#" className="zen-footer-link">
+                    <Link href="#" className="wincux-footer-link">
                       Discord
                     </Link>
                   </li>
                   <li>
-                    <Link href="#" className="zen-footer-link">
+                    <Link href="#" className="wincux-footer-link">
                       Status
                     </Link>
                   </li>
                   <li>
                     <Link
                       href="https://github.com/samcuxx/WinCux/issues"
-                      className="zen-footer-link"
+                      className="wincux-footer-link"
                     >
                       Report an Issue
                     </Link>
                   </li>
                   <li>
-                    <Link href="#" className="zen-footer-link">
+                    <Link href="#" className="wincux-footer-link">
                       Security
                     </Link>
                   </li>
@@ -216,12 +219,12 @@ export default function Footer() {
 
           {/* Copyright Section */}
           <section
-            className="zen-footer-copyright"
+            className="wincux-footer-copyright"
             aria-label="Copyright information"
           >
-            <p className="zen-copyright-text">
+            <p className="wincux-copyright-text">
               Made with ❤️ by{" "}
-              <Link href="#about" className="zen-copyright-link">
+              <Link href="#about" className="wincux-copyright-link">
                 SamCux
               </Link>
             </p>
@@ -229,8 +232,8 @@ export default function Footer() {
         </div>
 
         {/* Decorative Circles */}
-        <div className="zen-footer-decoration" aria-hidden="true">
-          <div className="zen-circles"></div>
+        <div className="wincux-footer-decoration" aria-hidden="true">
+          <div className="wincux-circles"></div>
         </div>
       </div>
     </footer>

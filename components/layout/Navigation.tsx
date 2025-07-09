@@ -9,6 +9,7 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [isAnimated, setIsAnimated] = useState(false);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -18,6 +19,60 @@ export default function Navigation() {
 
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  // Navbar animation effect
+  useEffect(() => {
+    const animateNavbar = () => {
+      const brandElement = document.querySelector(".wincux-nav-brand");
+      const menuElement = document.querySelector(".wincux-nav-menu");
+      const actionsElement = document.querySelector(".wincux-nav-actions");
+
+      // Animate brand
+      setTimeout(() => {
+        if (brandElement) {
+          const htmlElement = brandElement as HTMLElement;
+          htmlElement.style.transition =
+            "all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)";
+          htmlElement.style.opacity = "1";
+          htmlElement.style.transform = "translateY(0)";
+          htmlElement.style.filter = "blur(0)";
+        }
+      }, 100);
+
+      // Animate menu
+      setTimeout(() => {
+        if (menuElement) {
+          const htmlElement = menuElement as HTMLElement;
+          htmlElement.style.transition =
+            "all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)";
+          htmlElement.style.opacity = "1";
+          htmlElement.style.transform = "translateY(0)";
+          htmlElement.style.filter = "blur(0)";
+        }
+      }, 250);
+
+      // Animate actions
+      setTimeout(() => {
+        if (actionsElement) {
+          const htmlElement = actionsElement as HTMLElement;
+          htmlElement.style.transition =
+            "all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)";
+          htmlElement.style.opacity = "1";
+          htmlElement.style.transform = "translateY(0)";
+          htmlElement.style.filter = "blur(0)";
+        }
+      }, 400);
+
+      // Mark animation as complete
+      setTimeout(() => {
+        setIsAnimated(true);
+      }, 1000);
+    };
+
+    // Start navbar animation after a short delay
+    const timer = setTimeout(animateNavbar, 50);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleDropdownToggle = (
@@ -45,173 +100,55 @@ export default function Navigation() {
   return (
     <>
       {/* Desktop Navigation */}
-      <nav className="zen-navbar">
-        <div className="zen-nav-container">
+      <nav className="wincux-navbar">
+        <div className="wincux-nav-container">
           {/* Brand */}
-          <Link href="/" className="zen-nav-brand">
+          <Link
+            href="/"
+            className="wincux-nav-brand"
+            style={{
+              opacity: 0,
+              transform: "translateY(-20px)",
+              filter: "blur(4px)",
+            }}
+          >
             <Image
               src="/logo.png"
               alt="WinCux Logo"
               width={32}
               height={32}
-              className="zen-logo"
+              className="wincux-logo"
             />
             <span>WinCux</span>
           </Link>
 
           {/* Desktop Menu */}
-          <div className="zen-nav-menu">
-            {/* Getting Started Dropdown */}
-            <div
-              className="zen-dropdown-wrapper"
-              onMouseEnter={() => handleDropdownHover("gettingStarted")}
-              onMouseLeave={() => handleDropdownHover(null)}
-            >
-              <button
-                className="zen-dropdown-trigger"
-                onClick={(e) => handleDropdownToggle("gettingStarted", e)}
-              >
-                <span>Getting Started</span>
-                <svg
-                  className={`zen-chevron ${
-                    activeDropdown === "gettingStarted"
-                      ? "zen-chevron-open"
-                      : ""
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              {activeDropdown === "gettingStarted" && (
-                <div className="zen-dropdown-menu zen-dropdown-2col">
-                  <Link
-                    href="#features"
-                    className="zen-dropdown-item zen-dropdown-featured"
-                  >
-                    <div className="zen-dropdown-title">
-                      Desktop Enhancement
-                    </div>
-                    <div className="zen-dropdown-description">
-                      Transform your Windows desktop with beautiful wallpapers
-                      and Rainmeter integration
-                    </div>
-                    <button className="zen-dropdown-btn">
-                      Try WinCux
-                      <svg
-                        className="zen-arrow-icon"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                      </svg>
-                    </button>
-                  </Link>
-                  <Link href="/download" className="zen-dropdown-item">
-                    <div className="zen-dropdown-title">Download</div>
-                    <div className="zen-dropdown-description">
-                      Get WinCux for Windows, macOS, and Linux
-                    </div>
-                  </Link>
-                  <Link
-                    href="https://github.com/samcuxx/WinCux"
-                    className="zen-dropdown-item"
-                  >
-                    <div className="zen-dropdown-title">GitHub</div>
-                    <div className="zen-dropdown-description">
-                      View source code and contribute to the project
-                    </div>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* Useful Links Dropdown */}
-            <div
-              className="zen-dropdown-wrapper"
-              onMouseEnter={() => handleDropdownHover("usefulLinks")}
-              onMouseLeave={() => handleDropdownHover(null)}
-            >
-              <button
-                className="zen-dropdown-trigger"
-                onClick={(e) => handleDropdownToggle("usefulLinks", e)}
-              >
-                <span>Useful Links</span>
-                <svg
-                  className={`zen-chevron ${
-                    activeDropdown === "usefulLinks" ? "zen-chevron-open" : ""
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              {activeDropdown === "usefulLinks" && (
-                <div className="zen-dropdown-menu zen-dropdown-1col">
-                  <Link href="#about" className="zen-dropdown-item">
-                    <div className="zen-dropdown-title">About Us</div>
-                    <div className="zen-dropdown-description">
-                      Learn more about WinCux and our mission
-                    </div>
-                  </Link>
-                  <Link
-                    href="https://github.com/samcuxx/WinCux/wiki"
-                    className="zen-dropdown-item"
-                  >
-                    <div className="zen-dropdown-title">Documentation</div>
-                    <div className="zen-dropdown-description">
-                      User guides and technical documentation
-                    </div>
-                  </Link>
-                  <Link
-                    href="https://github.com/samcuxx/WinCux"
-                    className="zen-dropdown-item"
-                  >
-                    <div className="zen-dropdown-title">GitHub</div>
-                    <div className="zen-dropdown-description">
-                      Report issues and contribute to development
-                    </div>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* Direct Features Link */}
-            <Link href="#features" className="zen-nav-link">
-              <span>Features</span>
-            </Link>
-          </div>
+          <div
+            className="wincux-nav-menu"
+            style={{
+              opacity: 0,
+              transform: "translateY(-20px)",
+              filter: "blur(4px)",
+            }}
+          ></div>
 
           {/* Actions */}
-          <div className="zen-nav-actions">
-            <div className="zen-theme-switcher">
+          <div
+            className="wincux-nav-actions"
+            style={{
+              opacity: 0,
+              transform: "translateY(-20px)",
+              filter: "blur(4px)",
+            }}
+          >
+            <div className="wincux-theme-switcher">
               <ThemeSwitch />
             </div>
-            <Link href="/download" className="zen-download-btn">
-              <span className="zen-download-text">
+            <Link href="/download" className="wincux-download-btn">
+              <span className="wincux-download-text">
                 Download
                 <svg
-                  className="zen-arrow-icon"
+                  className="wincux-arrow-icon"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -224,7 +161,7 @@ export default function Navigation() {
                   />
                 </svg>
               </span>
-              <span className="zen-download-icon">
+              <span className="wincux-download-icon">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -237,11 +174,11 @@ export default function Navigation() {
             </Link>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="zen-mobile-menu-btn"
+              className="wincux-mobile-menu-btn"
               aria-label="Open menu"
             >
               <svg
-                className="zen-menu-icon"
+                className="wincux-menu-icon"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -260,15 +197,15 @@ export default function Navigation() {
 
       {/* Mobile Slide Menu */}
       <div
-        className={`zen-mobile-menu ${
-          isMobileMenuOpen ? "zen-mobile-menu-open" : ""
+        className={`wincux-mobile-menu ${
+          isMobileMenuOpen ? "wincux-mobile-menu-open" : ""
         }`}
       >
-        <div className="zen-mobile-header">
-          <div className="zen-mobile-title">Menu</div>
+        <div className="wincux-mobile-header">
+          <div className="wincux-mobile-title">Menu</div>
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className="zen-mobile-close"
+            className="wincux-mobile-close"
           >
             <span className="sr-only">Close menu</span>
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -281,15 +218,15 @@ export default function Navigation() {
             </svg>
           </button>
         </div>
-        <nav className="zen-mobile-nav">
-          <ul className="zen-mobile-list">
+        <nav className="wincux-mobile-nav">
+          <ul className="wincux-mobile-list">
             <li>
-              <div className="zen-mobile-section">Getting Started</div>
-              <ul className="zen-mobile-sublist">
+              <div className="wincux-mobile-section">Getting Started</div>
+              <ul className="wincux-mobile-sublist">
                 <li>
                   <Link
                     href="#features"
-                    className="zen-mobile-link"
+                    className="wincux-mobile-link"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Desktop Enhancement
@@ -298,7 +235,7 @@ export default function Navigation() {
                 <li>
                   <Link
                     href="/download"
-                    className="zen-mobile-link"
+                    className="wincux-mobile-link"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Download
@@ -307,7 +244,7 @@ export default function Navigation() {
                 <li>
                   <Link
                     href="https://github.com/samcuxx/WinCux"
-                    className="zen-mobile-link"
+                    className="wincux-mobile-link"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     GitHub
@@ -316,12 +253,12 @@ export default function Navigation() {
               </ul>
             </li>
             <li>
-              <div className="zen-mobile-section">Useful Links</div>
-              <ul className="zen-mobile-sublist">
+              <div className="wincux-mobile-section">Useful Links</div>
+              <ul className="wincux-mobile-sublist">
                 <li>
                   <Link
                     href="#about"
-                    className="zen-mobile-link"
+                    className="wincux-mobile-link"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     About Us
@@ -330,7 +267,7 @@ export default function Navigation() {
                 <li>
                   <Link
                     href="https://github.com/samcuxx/WinCux/wiki"
-                    className="zen-mobile-link"
+                    className="wincux-mobile-link"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Documentation
@@ -339,7 +276,7 @@ export default function Navigation() {
                 <li>
                   <Link
                     href="https://github.com/samcuxx/WinCux"
-                    className="zen-mobile-link"
+                    className="wincux-mobile-link"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     GitHub
@@ -350,7 +287,7 @@ export default function Navigation() {
             <li>
               <Link
                 href="#features"
-                className="zen-mobile-main-link"
+                className="wincux-mobile-main-link"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Features
@@ -359,7 +296,7 @@ export default function Navigation() {
             <li>
               <Link
                 href="/download"
-                className="zen-mobile-main-link"
+                className="wincux-mobile-main-link bg-[#6c5dd3]"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Download
@@ -372,7 +309,7 @@ export default function Navigation() {
       {/* Mobile Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="zen-mobile-overlay"
+          className="wincux-mobile-overlay"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}

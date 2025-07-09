@@ -5,53 +5,38 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Hero() {
-  const [isAnimating, setIsAnimating] = useState(true);
+  const [isReady, setIsReady] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    // Detect current theme
+    const detectTheme = () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      setTheme(currentTheme === "dark" ? "dark" : "light");
+    };
+
+    detectTheme();
+
+    // Listen for theme changes
+    const observer = new MutationObserver(detectTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     // Enhanced animation system for hero text
     const animateElements = () => {
-      // Animate hero title words individually
+      // Get all elements to animate
       const titleWords = document.querySelectorAll(".hero-title-word");
       const subtitleElement = document.querySelector(".hero-subtitle");
       const buttonsContainer = document.querySelector(".hero-buttons");
       const socialLinks = document.querySelector(".hero-social");
       const heroImage = document.querySelector(".hero-image-animate");
-
-      // Set initial states
-      titleWords.forEach((word) => {
-        const htmlElement = word as HTMLElement;
-        htmlElement.style.opacity = "0";
-        htmlElement.style.transform = "translateY(30px)";
-        htmlElement.style.filter = "blur(8px)";
-      });
-
-      if (subtitleElement) {
-        const htmlElement = subtitleElement as HTMLElement;
-        htmlElement.style.opacity = "0";
-        htmlElement.style.transform = "translateY(20px)";
-        htmlElement.style.filter = "blur(4px)";
-      }
-
-      if (buttonsContainer) {
-        const htmlElement = buttonsContainer as HTMLElement;
-        htmlElement.style.opacity = "0";
-        htmlElement.style.transform = "translateY(20px)";
-        htmlElement.style.filter = "blur(4px)";
-      }
-
-      if (socialLinks) {
-        const htmlElement = socialLinks as HTMLElement;
-        htmlElement.style.opacity = "0";
-        htmlElement.style.transform = "translateY(20px)";
-        htmlElement.style.filter = "blur(4px)";
-      }
-
-      if (heroImage) {
-        const htmlElement = heroImage as HTMLElement;
-        htmlElement.style.opacity = "0";
-        htmlElement.style.transform = "translateY(40px) scale(0.95)";
-        htmlElement.style.filter = "blur(8px)";
-      }
 
       // Animate title words with staggered timing
       titleWords.forEach((word, index) => {
@@ -62,7 +47,7 @@ export default function Hero() {
           htmlElement.style.opacity = "1";
           htmlElement.style.transform = "translateY(0)";
           htmlElement.style.filter = "blur(0)";
-        }, index * 100 + 200);
+        }, index * 150 + 300);
       });
 
       // Animate subtitle
@@ -75,7 +60,7 @@ export default function Hero() {
           htmlElement.style.transform = "translateY(0)";
           htmlElement.style.filter = "blur(0)";
         }
-      }, 800);
+      }, 1000);
 
       // Animate buttons
       setTimeout(() => {
@@ -87,7 +72,7 @@ export default function Hero() {
           htmlElement.style.transform = "translateY(0)";
           htmlElement.style.filter = "blur(0)";
         }
-      }, 1000);
+      }, 1200);
 
       // Animate social links
       setTimeout(() => {
@@ -99,7 +84,7 @@ export default function Hero() {
           htmlElement.style.transform = "translateY(0)";
           htmlElement.style.filter = "blur(0)";
         }
-      }, 1200);
+      }, 1400);
 
       // Animate hero image
       setTimeout(() => {
@@ -111,64 +96,160 @@ export default function Hero() {
           htmlElement.style.transform = "translateY(0) scale(1)";
           htmlElement.style.filter = "blur(0)";
         }
-      }, 1400);
+      }, 1600);
 
-      // Complete animation
+      // Mark animation as complete
       setTimeout(() => {
-        setIsAnimating(false);
-      }, 2400);
+        setIsReady(true);
+      }, 2800);
     };
 
     // Start animation after component mounts
-    const timer = setTimeout(animateElements, 100);
+    const timer = setTimeout(animateElements, 200);
     return () => clearTimeout(timer);
   }, []);
+
+  // Professional scroll effect for hero image
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setScrollY(scrollPosition);
+
+      const heroImage = document.querySelector(".hero-image-animate");
+      if (heroImage && isReady) {
+        const htmlElement = heroImage as HTMLElement;
+
+        // Calculate scroll progress (0 to 1)
+        const maxScroll = window.innerHeight * 0.8; // Scale effect active for first 80% of viewport height
+        const scrollProgress = Math.min(scrollPosition / maxScroll, 1);
+
+        // Professional scaling: starts at 1, goes up to 1.15 (15% larger)
+        const scaleValue = 1 + scrollProgress * 0.15;
+
+        // Smooth transform without affecting the initial animation
+        htmlElement.style.transform = `translateY(0) scale(${scaleValue})`;
+
+        // Optional: Add slight opacity fade for depth effect
+        const opacityValue = Math.max(1 - scrollProgress * 0.2, 0.8);
+        htmlElement.style.opacity = opacityValue.toString();
+      }
+    };
+
+    // Add scroll listener with throttling for performance
+    let ticking = false;
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    // Only add scroll listener after initial animation completes
+    if (isReady) {
+      window.addEventListener("scroll", throttledScroll, { passive: true });
+
+      return () => {
+        window.removeEventListener("scroll", throttledScroll);
+      };
+    }
+  }, [isReady]);
 
   return (
     <div className="container">
       <header
-        className="flex w-full flex-col items-center gap-6 pb-16 text-center lg:gap-12 lg:pb-32"
+        className="flex w-full flex-col items-center gap-8 pb-16 text-center lg:gap-16 lg:pb-32"
         style={{
-          marginTop: "80px",
-          paddingTop: "6rem",
+          paddingTop: "4rem",
         }}
       >
-        <div className="flex h-full flex-col items-center justify-center gap-6 md:gap-8">
-          <div className="flex flex-col items-center justify-center gap-4 md:gap-8">
+        <div className="flex h-full flex-col items-center justify-center gap-8 md:gap-12">
+          <div className="flex flex-col items-center justify-center gap-6 md:gap-10">
             <div>
-              <h1 className="relative px-12 text-center text-5xl font-junicode font-semibold leading-[0.9] text-dark mb-[0.4rem] md:text-7xl lg:px-0 lg:text-9xl">
-                <span className="hero-title-word font-normal inline-block">
+              <h1 className="relative px-12 text-center text-4xl font-junicode font-semibold leading-[0.9] text-dark mb-[0.4rem] md:text-5xl lg:px-0 lg:text-8xl">
+                <span
+                  className="hero-title-word font-normal inline-block"
+                  style={{
+                    opacity: 0,
+                    transform: "translateY(30px)",
+                    filter: "blur(8px)",
+                  }}
+                >
                   welcome{" "}
                 </span>{" "}
-                <span className="hero-title-word font-normal inline-block">
+                <span
+                  className="hero-title-word font-normal inline-block"
+                  style={{
+                    opacity: 0,
+                    transform: "translateY(30px)",
+                    filter: "blur(8px)",
+                  }}
+                >
                   to
                 </span>
                 <br className="hidden md:block" />
-                <span className="hero-title-word font-normal inline-block">
+                <span
+                  className="hero-title-word font-normal inline-block"
+                  style={{
+                    opacity: 0,
+                    transform: "translateY(30px)",
+                    filter: "blur(8px)",
+                  }}
+                >
                   a more
                 </span>{" "}
-                <span className="hero-title-word font-normal italic text-coral inline-block">
+                <span
+                  className="hero-title-word font-normal italic text-coral inline-block"
+                  style={{
+                    opacity: 0,
+                    transform: "translateY(30px)",
+                    filter: "blur(8px)",
+                  }}
+                >
                   beautiful
                 </span>
                 <br className="hidden md:block" />
-                <span className="hero-title-word font-normal inline-block">
+                <span
+                  className="hero-title-word font-normal inline-block"
+                  style={{
+                    opacity: 0,
+                    transform: "translateY(30px)",
+                    filter: "blur(8px)",
+                  }}
+                >
                   desktop
                 </span>
               </h1>
-              <p className="hero-subtitle px-12 text-center lg:px-0">
+              <p
+                className="hero-subtitle px-12 text-center text-md md:text-xl lg:px-0 lg:text-sm xt-muted-foreground"
+                style={{
+                  opacity: 0,
+                  transform: "translateY(20px)",
+                  filter: "blur(4px)",
+                }}
+              >
                 Beautifully designed, privacy-focused, and packed with features.
                 <br className="hidden sm:inline" />
                 We care about your desktop experience, not your data.
               </p>
             </div>
-            <div className="hero-buttons flex w-2/3 flex-col items-center justify-center gap-3 sm:gap-6 md:w-fit md:flex-row">
+            <div
+              className="hero-buttons flex w-2/3 flex-col items-center justify-center gap-4 sm:gap-6 md:w-fit md:flex-row"
+              style={{
+                opacity: 0,
+                transform: "translateY(20px)",
+                filter: "blur(4px)",
+              }}
+            >
               <Link
                 href="/download"
-                className="btn btn-primary inline-flex items-center gap-2 w-fit"
+                className="btn btn-primary inline-flex items-center gap-2 w-fit text-lg px-8 py-4"
               >
                 Download Now
                 <svg
-                  className="size-4"
+                  className="size-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -183,7 +264,7 @@ export default function Hero() {
               </Link>
               <Link
                 href="https://github.com/samcuxx/WinCux"
-                className="btn btn-secondary w-fit"
+                className="btn btn-secondary w-fit text-lg px-8 py-4"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -191,56 +272,52 @@ export default function Hero() {
               </Link>
             </div>
           </div>
-          <ul className="hero-social flex items-center gap-4 opacity-80">
-            <li>
-              <Link
-                href="https://github.com/samcuxx/WinCux"
-                target="_blank"
-                className="font-bold"
-                aria-label="Visit WinCux on GitHub"
-              >
-                <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                </svg>
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="font-normal">
-                <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                </svg>
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="font-normal">
-                <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
-                </svg>
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="font-normal">
-                <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
-                </svg>
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div className="hero-image-animate rounded-xl">
-          <Image
-            src="/Screenshot1.png"
-            alt="WinCux Desktop Enhancement Application"
-            width={1200}
-            height={800}
-            className="rounded-xl"
+          <ul
+            className="hero-social flex items-center gap-6 opacity-80"
             style={{
-              width: "100%",
-              height: "auto",
-              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+              opacity: 0,
+              transform: "translateY(20px)",
+              filter: "blur(4px)",
             }}
-            priority
-          />
+          ></ul>
+        </div>
+        <div
+          className="hero-image-animate rounded-2xl w-full max-w-6xl mx-auto"
+          style={{
+            opacity: 0,
+            transform: "translateY(40px) scale(0.95)",
+            filter: "blur(8px)",
+            transformOrigin: "center center",
+            willChange: "transform, opacity",
+          }}
+        >
+          <div className="relative">
+            <Image
+              src={`/Screenshot/WinCux_${theme}.png`}
+              alt="WinCux Desktop Enhancement Application"
+              width={1920}
+              height={1080}
+              className="rounded-2xl w-full h-auto"
+              style={{
+                boxShadow:
+                  theme === "dark"
+                    ? "0 40px 80px -12px rgba(108, 93, 211, 0.4), 0 20px 40px -8px rgba(108, 93, 211, 0.2)"
+                    : "0 40px 80px -12px rgba(108, 93, 211, 0.3), 0 20px 40px -8px rgba(108, 93, 211, 0.15)",
+              }}
+              priority
+            />
+            {/* Professional gradient overlay for depth */}
+            <div
+              className="absolute inset-0 rounded-2xl"
+              style={{
+                background:
+                  theme === "dark"
+                    ? "linear-gradient(135deg, rgba(108, 93, 211, 0.1) 0%, transparent 50%, rgba(108, 93, 211, 0.05) 100%)"
+                    : "linear-gradient(135deg, rgba(108, 93, 211, 0.05) 0%, transparent 50%, rgba(108, 93, 211, 0.02) 100%)",
+                pointerEvents: "none",
+              }}
+            />
+          </div>
         </div>
       </header>
     </div>
