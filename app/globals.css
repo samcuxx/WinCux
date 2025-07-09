@@ -1914,3 +1914,279 @@ h1 .italic {
   background: var(--muted);
   transform: none;
 }
+
+/* Download Page Loading States */
+.download-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 4rem 2rem;
+}
+
+.download-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 3px solid var(--border);
+  border-top: 3px solid var(--primary);
+  border-radius: 50%;
+  animation: download-spin 1s linear infinite;
+}
+
+@keyframes download-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.download-loading-text {
+  font-size: 1rem;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+/* Download Page Error States */
+.download-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.download-error-icon {
+  width: 4rem;
+  height: 4rem;
+  color: var(--destructive);
+}
+
+.download-error-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0;
+}
+
+.download-error-message {
+  font-size: 1rem;
+  color: var(--muted-foreground);
+  margin: 0;
+  max-width: 500px;
+}
+
+.download-fallback-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.download-fallback-btn:hover {
+  background: color-mix(in srgb, var(--primary) 90%, transparent);
+  transform: translateY(-1px);
+}
+
+/* Release Information */
+.download-release-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.download-version {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.download-version-text {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.download-version-number {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  padding: 0.25rem 0.75rem;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.download-release-date {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  font-weight: 400;
+}
+
+/* Enhanced Download Button */
+.download-btn-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.download-btn-text {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.download-btn-size {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  font-weight: 400;
+}
+
+/* Platform Cards Enhancements */
+.download-platform-downloads {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  margin: 0.25rem 0 0 0;
+  font-weight: 500;
+}
+
+/* Release Notes Section */
+.download-release-notes {
+  background: var(--background);
+  border: 2px solid var(--border);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-top: 3rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.download-release-notes-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+.download-release-notes-content {
+  background: var(--secondary);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+
+.download-release-notes-text {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas,
+    "Liberation Mono", Menlo, monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--foreground);
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.download-release-notes-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.download-release-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.download-release-link:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  transform: translateY(-1px);
+}
+
+/* Responsive Improvements */
+@media (max-width: 640px) {
+  .download-version {
+    gap: 0.25rem;
+  }
+
+  .download-version-number {
+    font-size: 1.125rem;
+  }
+
+  .download-btn-content {
+    align-items: center;
+    text-align: center;
+  }
+
+  .download-release-notes {
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .download-release-notes-title {
+    font-size: 1.25rem;
+  }
+
+  .download-release-notes-content {
+    padding: 1rem;
+  }
+
+  .download-release-notes-text {
+    font-size: 0.8rem;
+  }
+}
+
+/* Platform Detection Animation */
+.download-container {
+  animation: download-fade-in 0.8s ease-out;
+}
+
+@keyframes download-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced Platform Icons */
+.download-platform-icon svg,
+.download-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.download-platform-card:hover .download-platform-icon svg {
+  transform: scale(1.1);
+}
+
+.download-btn:hover svg {
+  transform: translateX(2px);
+}
