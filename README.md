@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="resources/icon.png" alt="WinCux Logo" width="128" height="128">
+  <img src="public/resources/icon.png" alt="WinCux Logo" width="128" height="128">
   
   **A Professional Windows 11-Style Desktop Enhancement Application**
   
