@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "wincuxOG.png",
+        url: "https://github.com/samcuxx/WinCux/blob/main/public/wincuxOG.png?raw=true",
         width: 1200,
         height: 630,
         alt: "WinCux Desktop Enhancement Application",
@@ -42,7 +42,9 @@ export const metadata: Metadata = {
     title: "WinCux - A More Beautiful Desktop",
     description:
       "Beautifully designed, privacy-focused desktop enhancement for Windows.",
-    images: ["wincuxOG.png"],
+    images: [
+      "https://github.com/samcuxx/WinCux/blob/main/public/wincuxOG.png?raw=true",
+    ],
   },
   robots: {
     index: true,
