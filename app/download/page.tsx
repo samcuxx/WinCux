@@ -350,10 +350,12 @@ export default function DownloadPage() {
                           : "Coming soon"}
                       </p>
                       {asset && (
-                        <p className="download-platform-downloads">
-                          {asset.download_count.toLocaleString()} downloads
-                        </p>
-                      )}
+                        // <p className="download-platform-downloads">
+                        //   {asset.download_count.toLocaleString()} downloads
+                        // </p> 
+                        ""
+                      )
+                      }
                     </div>
                   </div>
 
