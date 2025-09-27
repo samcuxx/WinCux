@@ -144,6 +144,25 @@ export default function Navigation() {
             <div className="wincux-theme-switcher">
               <ThemeSwitch />
             </div>
+            <a
+              href="https://www.samcux.tech/about"
+              className="wincux-about-dev-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                marginLeft: "0.75rem",
+                display: "inline-flex",
+                alignItems: "center",
+                fontWeight: 500,
+                fontSize: "1rem",
+                color: "inherit",
+                textDecoration: "none",
+                opacity: 0.85,
+                transition: "opacity 0.2s",
+              }}
+            >
+              Dev
+            </a>
             <Link href="/download" className="wincux-download-btn">
               <span className="wincux-download-text">
                 Download
@@ -172,6 +191,7 @@ export default function Navigation() {
                 </svg>
               </span>
             </Link>
+
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="wincux-mobile-menu-btn"
@@ -281,6 +301,17 @@ export default function Navigation() {
                   >
                     GitHub
                   </Link>
+                </li>
+                <li>
+                  <a
+                    href="https://www.samcux.tech/about"
+                    className="wincux-mobile-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    About Developer
+                  </a>
                 </li>
               </ul>
             </li>
