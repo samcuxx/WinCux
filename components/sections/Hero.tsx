@@ -263,12 +263,12 @@ export default function Hero() {
                 </svg>
               </Link>
               <Link
-                href="https://github.com/samcuxx/WinCux"
+                href="https://ko-fi.com/samcux"
                 className="btn btn-secondary w-fit text-lg px-8 py-4"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Support Us ❤️
+                Support Me ❤️
               </Link>
             </div>
           </div>
