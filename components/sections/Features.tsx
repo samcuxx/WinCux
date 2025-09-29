@@ -1,52 +1,105 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 export default function Features() {
-  const [activeFeature, setActiveFeature] = useState(0);
-  const [isAnimated, setIsAnimated] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [isImageLoading, setIsImageLoading] = useState(false);
-  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
 
   const features = [
     {
       id: "wallpapers",
       title: "Wallpaper Management",
       description:
-        "Browse and download thousands of high-quality wallpapers from Wallhaven. Advanced filtering by categories, colors, resolutions, and tags with instant preview and one-click apply.",
+        "Browse and download thousands of high-quality wallpapers from Wallhaven with advanced filtering and one-click apply.",
       screenshot: "Wallpapers_light",
       screenshotDark: "Wallpaper_dark",
+      icon: (
+        <svg
+          className="feature-icon"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+          />
+        </svg>
+      ),
     },
     {
       id: "rainmeter",
       title: "Rainmeter Integration",
       description:
-        "Seamlessly manage Rainmeter skins with automatic detection, easy installation, and configuration. Toggle controls let you enable/disable skins directly from the app.",
+        "Seamlessly manage Rainmeter skins with automatic detection, easy installation, and configuration controls.",
       screenshot: "Rainmeter_light",
       screenshotDark: "Rainmeter_dark",
+      icon: (
+        <svg
+          className="feature-icon"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+          />
+        </svg>
+      ),
     },
     {
       id: "design",
       title: "Modern Design",
       description:
-        "Windows 11 Fluent Design System with acrylic effects, modern shadows, and smooth animations. Supports both dark and light themes with system preference detection.",
+        "Windows 11 Fluent Design with acrylic effects, smooth animations, and support for both dark and light themes.",
       screenshot: "Modern_design_light",
       screenshotDark: "Modern_design_dark",
+      icon: (
+        <svg
+          className="feature-icon"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"
+          />
+        </svg>
+      ),
     },
     {
       id: "features",
       title: "Smart Features",
       description:
-        "Auto-updates, NSFW filtering, performance optimization, download management, and persistent settings. Everything you need for a seamless desktop enhancement experience.",
+        "Auto-updates, NSFW filtering, performance optimization, and persistent settings for seamless desktop enhancement.",
       screenshot: "Features_light",
       screenshotDark: "Features_dark",
+      icon: (
+        <svg
+          className="feature-icon"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 10V3L4 14h7v7l9-11h-7z"
+          />
+        </svg>
+      ),
     },
   ];
-
-  const titles = ["Productivity ", "at ", "its ", "best"];
 
   useEffect(() => {
     // Detect current theme
@@ -67,325 +120,44 @@ export default function Features() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isAnimated) {
-          setIsAnimated(true);
-          animateElements();
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      observer.disconnect();
-      // Clean up any pending hover timeout
-      if (hoverTimeout) {
-        clearTimeout(hoverTimeout);
-      }
-    };
-  }, [isAnimated, hoverTimeout]);
-
-  const animateElements = () => {
-    // Animate title words with stagger
-    const titleElements = document.querySelectorAll(".wincux-title-word");
-    titleElements.forEach((element, index) => {
-      const htmlElement = element as HTMLElement;
-      htmlElement.style.opacity = "0";
-      htmlElement.style.transform = "translateY(20px)";
-      htmlElement.style.filter = "blur(4px)";
-
-      setTimeout(() => {
-        htmlElement.style.transition =
-          "all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)";
-        htmlElement.style.opacity = "1";
-        htmlElement.style.transform = "translateY(0)";
-        htmlElement.style.filter = "blur(0)";
-      }, index * 200 + 200);
-    });
-
-    // Animate description
-    const descElement = document.querySelector(".wincux-feature-description");
-    if (descElement) {
-      const htmlElement = descElement as HTMLElement;
-      htmlElement.style.opacity = "0";
-      htmlElement.style.transform = "translateY(20px)";
-      htmlElement.style.filter = "blur(4px)";
-
-      setTimeout(() => {
-        htmlElement.style.transition =
-          "all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)";
-        htmlElement.style.opacity = "1";
-        htmlElement.style.transform = "translateY(0)";
-        htmlElement.style.filter = "blur(0)";
-      }, 600);
-    }
-
-    // Animate feature items and tabs
-    const featureElements = document.querySelectorAll(
-      ".wincux-feature-item, .wincux-feature-tab"
-    );
-    featureElements.forEach((element, index) => {
-      const htmlElement = element as HTMLElement;
-      htmlElement.style.opacity = "0";
-      htmlElement.style.transform = "translateY(20px)";
-      htmlElement.style.filter = "blur(4px)";
-
-      setTimeout(() => {
-        htmlElement.style.transition =
-          "all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)";
-        htmlElement.style.opacity = "1";
-        htmlElement.style.transform = "translateY(0)";
-        htmlElement.style.filter = "blur(0)";
-      }, index * 200 + 800);
-    });
-  };
-
-  const handleFeatureChange = (index: number) => {
-    if (index === activeFeature && !isImageLoading) return;
-
-    setActiveFeature(index);
-    setIsImageLoading(true);
-
-    // Update active states
-    const allFeatures = document.querySelectorAll(
-      ".wincux-feature-item, .wincux-feature-tab"
-    );
-    allFeatures.forEach((el, i) => {
-      const actualIndex = i >= features.length ? i - features.length : i;
-      if (actualIndex === index) {
-        el.setAttribute("data-active", "true");
-      } else {
-        el.removeAttribute("data-active");
-      }
-    });
-
-    // Professional image transition with smooth animations
-    const images = document.querySelectorAll(".wincux-feature-image");
-    images.forEach((img, i) => {
-      const htmlImg = img as HTMLElement;
-      const yOffset = (i - index) * 30;
-      const zOffset = i === index ? 0 : -100 - Math.abs(i - index) * 60;
-      const scale = i === index ? 1 : 0.92;
-      const rotation = (i - index) * 2;
-      const opacity = i === index ? 1 : 0.4;
-
-      if (i === index) {
-        htmlImg.setAttribute("data-active", "true");
-        setTimeout(() => {
-          htmlImg.style.opacity = "1";
-          htmlImg.style.transform = `translate3d(-50%, 0, 0) scale(${scale})`;
-          htmlImg.style.zIndex = "20";
-        }, 50);
-      } else {
-        htmlImg.removeAttribute("data-active");
-        htmlImg.style.opacity = opacity.toString();
-        htmlImg.style.transform = `translate3d(-50%, ${yOffset}px, ${zOffset}px) rotate3d(1, 0, 0, ${rotation}deg) scale(${scale})`;
-        htmlImg.style.zIndex = String(20 - Math.abs(i - index));
-      }
-    });
-
-    // Update mobile description
-    const mobileDesc = document.querySelector(".wincux-mobile-description");
-    if (mobileDesc) {
-      mobileDesc.textContent = features[index].description;
-    }
-
-    // Reset loading state after animation completes
-    setTimeout(() => {
-      setIsImageLoading(false);
-    }, 300);
-  };
-
-  const handleFeatureHover = (index: number) => {
-    // Clear existing timeout
-    if (hoverTimeout) {
-      clearTimeout(hoverTimeout);
-    }
-
-    // Set new timeout for smoother hover experience
-    const timeout = setTimeout(() => {
-      handleFeatureChange(index);
-    }, 100);
-
-    setHoverTimeout(timeout);
-  };
-
-  const initializeFeatures = () => {
-    // Properly initialize the first feature after animation completes
-    setTimeout(() => {
-      handleFeatureChange(0);
-
-      // Ensure first feature is properly displayed
-      const firstImage = document.querySelector(
-        '.wincux-feature-image[data-index="0"]'
-      );
-      const firstFeature = document.querySelector(
-        '.wincux-feature-item[data-index="0"]'
-      );
-      const firstTab = document.querySelector(
-        '.wincux-feature-tab[data-index="0"]'
-      );
-
-      if (firstImage) {
-        const htmlImg = firstImage as HTMLElement;
-        htmlImg.setAttribute("data-active", "true");
-        htmlImg.style.opacity = "1";
-        htmlImg.style.transform = "translate3d(-50%, 0, 0) scale(1)";
-        htmlImg.style.zIndex = "20";
-      }
-
-      if (firstFeature) {
-        firstFeature.setAttribute("data-active", "true");
-      }
-
-      if (firstTab) {
-        firstTab.setAttribute("data-active", "true");
-      }
-    }, 1200);
-  };
-
-  useEffect(() => {
-    // Initialize the first feature after animation completes
-    if (isAnimated) {
-      initializeFeatures();
-    }
-  }, [isAnimated]);
-
-  // Update images when theme changes
-  useEffect(() => {
-    if (isAnimated && !isImageLoading) {
-      setIsImageLoading(true);
-
-      // Force re-render of all images when theme changes
-      const images = document.querySelectorAll(".wincux-feature-image");
-      images.forEach((img, index) => {
-        const htmlImg = img as HTMLElement;
-        // Reset image styles temporarily to force update
-        htmlImg.style.opacity = "0";
-        htmlImg.style.transform = "translate3d(-50%, 30px, -100px) scale(0.92)";
-      });
-
-      // Re-trigger the current feature with a slight delay to allow image loading
-      setTimeout(() => {
-        handleFeatureChange(activeFeature);
-      }, 200);
-    }
-  }, [theme, isAnimated]);
-
-  // Force image refresh when theme changes
   const getImageSrc = (feature: (typeof features)[0]) => {
     return `/Screenshot/${
       theme === "dark" ? feature.screenshotDark : feature.screenshot
-    }.png?v=${theme}`;
+    }.png`;
   };
 
   return (
-    <section ref={sectionRef} id="features" className="wincux-features-section">
-      <div className="container">
-        {/* Section Title */}
-        <div className="wincux-features-header">
-          <h2 className="wincux-features-title">
-            {titles.map((title, index) => (
-              <span
-                key={index}
-                className={`wincux-title-word ${
-                  title.trim() === "best" ? "wincux-title-highlight" : ""
-                }`}
-              >
-                {title}
-                {index === 1 && <br className="hidden md:block" />}
-              </span>
-            ))}
-          </h2>
-
-          <p className="wincux-feature-description">
-            WinCux is packed with features that help you create the perfect
-            desktop environment. Desktop enhancement tools should be powerful
-            yet simple to use.
+    <section className="features-section">
+      <div className="features-container">
+        <div className="features-header">
+          <h2 className="features-title">Powerful Features</h2>
+          <p className="features-description">
+            Everything you need to create the perfect desktop environment
           </p>
         </div>
 
-        {/* Features Content */}
-        <div className="wincux-features-content">
-          {/* Feature List - Desktop */}
-          <div className="wincux-features-list">
-            {features.map((feature, index) => (
-              <div
-                key={feature.id}
-                className="wincux-feature-item"
-                data-index={index}
-                onClick={() => handleFeatureChange(index)}
-                onMouseEnter={() => handleFeatureHover(index)}
-              >
-                <h3 className="wincux-feature-title">{feature.title}</h3>
-                <p className="wincux-feature-desc">{feature.description}</p>
+        <div className="features-grid">
+          {features.map((feature, index) => (
+            <div key={feature.id} className="feature-card">
+              <div className="feature-card-header">
+                <div className="feature-icon-wrapper">{feature.icon}</div>
+                <h3 className="feature-card-title">{feature.title}</h3>
               </div>
-            ))}
-          </div>
 
-          {/* Feature Tabs - Mobile */}
-          <div className="wincux-features-tabs">
-            {features.map((feature, index) => (
-              <button
-                key={feature.id}
-                className="wincux-feature-tab"
-                data-index={index}
-                onClick={() => handleFeatureChange(index)}
-              >
-                {feature.title}
-              </button>
-            ))}
-          </div>
+              <p className="feature-card-description">{feature.description}</p>
 
-          {/* Mobile Description */}
-          <div className="wincux-mobile-description">
-            {features[0].description}
-          </div>
-
-          {/* Image Stack */}
-          <div className="wincux-image-container">
-            <div className="wincux-image-stack">
-              {features.map((feature, index) => (
+              <div className="feature-card-image">
                 <Image
-                  key={`${feature.id}-${theme}-${index}`}
                   src={getImageSrc(feature)}
                   alt={feature.title}
-                  width={1920}
-                  height={1080}
-                  className="wincux-feature-image"
-                  data-index={index}
+                  width={400}
+                  height={225}
+                  className="feature-screenshot"
                   priority={index === 0}
-                  style={{
-                    opacity: 0,
-                    transform: "translate3d(-50%, 30px, -100px) scale(0.92)",
-                    transition: "all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)",
-                  }}
-                  unoptimized={false}
-                  onLoad={() => {
-                    // Ensure image is ready for display
-                    if (index === activeFeature && isAnimated) {
-                      const img = document.querySelector(
-                        `.wincux-feature-image[data-index="${index}"]`
-                      ) as HTMLElement;
-                      if (img) {
-                        setTimeout(() => {
-                          img.style.opacity = "1";
-                          img.style.transform =
-                            "translate3d(-50%, 0, 0) scale(1)";
-                        }, 50);
-                      }
-                    }
-                  }}
                 />
-              ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
