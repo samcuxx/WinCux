@@ -91,10 +91,17 @@ export default function DownloadPage() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch("/api/releases/latest");
+        const response = await fetch("/api/github/latest", {
+          cache: "no-store",
+        });
 
         if (!response.ok) {
-          throw new Error(`Failed to fetch release data: ${response.status}`);
+          let message = `Failed to fetch release data: ${response.status}`;
+          try {
+            const json = await response.json();
+            if (json?.error) message = json.error;
+          } catch {}
+          throw new Error(message);
         }
 
         const releaseData: GitHubRelease = await response.json();
