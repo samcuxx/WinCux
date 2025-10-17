@@ -91,14 +91,7 @@ export default function DownloadPage() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(
-          "https://api.github.com/repos/samcuxx/WinCux/releases/latest",
-          {
-            headers: {
-              Accept: "application/vnd.github.v3+json",
-            },
-          }
-        );
+        const response = await fetch("/api/releases/latest");
 
         if (!response.ok) {
           throw new Error(`Failed to fetch release data: ${response.status}`);
@@ -349,13 +342,11 @@ export default function DownloadPage() {
                           ? "No release available"
                           : "Coming soon"}
                       </p>
-                      {asset && (
+                      {asset &&
                         // <p className="download-platform-downloads">
                         //   {asset.download_count.toLocaleString()} downloads
-                        // </p> 
-                        ""
-                      )
-                      }
+                        // </p>
+                        ""}
                     </div>
                   </div>
 
