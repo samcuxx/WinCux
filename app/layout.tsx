@@ -7,7 +7,7 @@ import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://wincux.samcux.tech"),
+  metadataBase: new URL("https://wincux.samcux.com"),
   title: "WinCux - A More Beautiful Desktop",
   description:
     "Beautifully designed, privacy-focused desktop enhancement for Windows. Manage wallpapers, Rainmeter skins, and customize your Windows 11 experience.",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     title: "WinCux - A More Beautiful Desktop",
     description:
       "Beautifully designed, privacy-focused desktop enhancement for Windows. Manage wallpapers, Rainmeter skins, and customize your Windows 11 experience.",
-    url: "https://wincux.samcux.tech",
+    url: "https://wincux.samcux.com",
     siteName: "WinCux",
     type: "website",
     images: [

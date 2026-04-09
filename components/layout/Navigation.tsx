@@ -77,7 +77,7 @@ export default function Navigation() {
 
   const handleDropdownToggle = (
     dropdownName: string,
-    event: React.MouseEvent
+    event: React.MouseEvent,
   ) => {
     event.stopPropagation();
     setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
@@ -145,7 +145,7 @@ export default function Navigation() {
               <ThemeSwitch />
             </div>
             <a
-              href="https://www.samcux.tech/about"
+              href="https://www.samcux.com/about"
               className="wincux-about-dev-btn"
               target="_blank"
               rel="noopener noreferrer"
@@ -304,7 +304,7 @@ export default function Navigation() {
                 </li>
                 <li>
                   <a
-                    href="https://www.samcux.tech/about"
+                    href="https://www.samcux.com/about"
                     className="wincux-mobile-link"
                     target="_blank"
                     rel="noopener noreferrer"
